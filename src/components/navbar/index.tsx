@@ -1,3 +1,5 @@
+import { AiOutlineSearch } from 'react-icons/ai';
+
 const Navbar = () => {
     return (
         <div className="flex flex-row w-full justify-between items-center bg-cyan-200 p-4">
@@ -9,7 +11,7 @@ const Navbar = () => {
                         placeholder="Search for items" 
                     />
 
-                    <div className="relative right-5">p</div>
+                    <div className="relative right-8"><AiOutlineSearch className='fill-gray-500 hover:fill-gray-700 cursor-pointer'/></div>
                 </div>
             <div></div>
         </div>
