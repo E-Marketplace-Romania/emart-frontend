@@ -23,7 +23,7 @@ const Filters: FC<FiltersProps> = ({ selected, onChange, selectList }) => {
                     className="group inline-flex items-center rounded-md bg-blue-200 px-20 py-1 my-5 hover:bg-blue-300"
                 >Tip componenta <BsChevronDown className="mx-3"/></Popover.Button>
 
-                <Popover.Panel className="absolute mt-3 w-1/6 rounded-lg bg-white p-4 shadow-lg transition-shadow duration-300 hover:shadow-lg">
+                <Popover.Panel className="absolute mt-3 z-10 w-1/6 rounded-lg bg-white p-4 shadow-2xl transition-shadow duration-300 hover:shadow-lg">
                     <div className="grid grid-cols-1">
                         <RadioGroup value={selected} onChange={onChange} className="w-full">
                             {selectList.map((componentType) => (
