@@ -4,7 +4,7 @@ import EmartTab from "./EmartTab";
 import DePeNet from "./DePeNet";
 
 const PartsTabs = () => {
-    const tabBaseClasses = "ui-not-selected:bg-gray-200 outline-none px-20 py-2 ui-selected:bg-gray-300";
+    const tabBaseClasses = "ui-not-selected:bg-quaternary outline-none px-20 py-2 ui-selected:bg-secondary ui-selected:text-white";
 
     return (
         <div className="flex flex-col justify-center items-center p-10 w-full h-full">

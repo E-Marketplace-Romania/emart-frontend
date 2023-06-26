@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Filters from "../filters";
 import ProductCard from "../product-card";
+import { HttpClient } from "../../util/Http";
+import axios from "axios";
+import PaginationButtons from "../pagination-buttons";
 
 const componentTypes = [
     { name: "Toate", category: "toate" },
     { name: "Placa de baza", category: "placa-baza" },
-    { name: "Procesor", category: "processor" },
+    { name: "Procesor", category: "procesor" },
     { name: "Memorie", category: "memorie-ram" },
     { name: "Placa video", category: "placa-video" },
     { name: "Hard disk", category: "hard-disk" },
@@ -15,64 +18,35 @@ const componentTypes = [
     { name: "Cooler / Ventilatoare", category: "coolere-ventilatoare" },
 ];
 
-const products = [
-  {
-    title: "Product 1",
-    price: 9.99,
-    description: "Description of Product 1",
-    image: "https://placehold.co/600x400?text=No+image+found",
-    link: "product1.html",
-    platform: "Platform A",
-    favorite: true
-  },
-  {
-    title: "Product 2",
-    price: 19.99,
-    description: "Description of Product 2",
-    image: "https://placehold.co/600x400?text=No+image+found",
-    link: "product2.html",
-    platform: "Platform B",
-    favorite: false
-  },
-  // Add more objects for the remaining 11 products...
-  {
-    title: "Product 3",
-    price: 29.99,
-    description: "Description of Product 3",
-    image: "https://placehold.co/600x400?text=No+image+found",
-    link: "product3.html",
-    platform: "Platform C",
-    favorite: true
-  },
-  {
-    title: "Product 4",
-    price: 9.99,
-    description: "Description of Product 4",
-    image: "https://placehold.co/600x400?text=No+image+found",
-    link: "product4.html",
-    platform: "Platform A",
-    favorite: true
-  },
-  {
-    title: "Product 13",
-    price: 29.99,
-    description: "Description of Product 13",
-    image: "https://placehold.co/600x400?text=No+image+found",
-    link: "product13.html",
-    platform: "Platform C",
-    favorite: true
-  }
-];
-
 const DePeNet = () => {
     const [selected, setSelected] = useState("toate");
+    const [products, setProducts] = useState<any[]>([]);
+
+    const changeFilter = async (selected: string) => {
+        const data = await HttpClient.get('/scraper', { category: selected });
+        setSelected(selected);
+        console.log(data);
+        setProducts(data.items);
+    }
+
+    useEffect(() => {
+        const getProducts = async () => {
+            const data = await HttpClient.get('/scraper');
+            setProducts(data.items);
+        };
+        getProducts();
+    }, []);
+
     return (
         <div className="h-full w-full flex flex-col items-center">
-            <Filters selected={selected} onChange={setSelected} selectList={componentTypes}/>
+            <Filters selected={selected} onChange={changeFilter} selectList={componentTypes}/>
             <div className="grid grid-cols-4 gap-4 w-full">
                 {products.map((product) => (
                     <ProductCard {...product} key={product.title} />
                 ))}
+            </div>
+            <div className="mt-5">
+                <PaginationButtons onPageChange={() => console.log('page change')} totalPages={25}/>
             </div>
         </div>
     );
